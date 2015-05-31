@@ -87,13 +87,13 @@ Public Class MixerClipCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -102,15 +102,15 @@ Public Class MixerClipCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -118,16 +118,16 @@ Public Class MixerClipCommand
     End Function
 
     Public Sub setX(ByVal x As Single)
-        If IsNothing(x) Then
-            DirectCast(getCommandParameter("x"), CommandParameter(Of Single)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("x"), CommandParameter(Of Single)).setValue(x)
-        End If
+        'If x Is Nothing Then
+        '    DirectCast(getCommandParameter("x"), CommandParameter(Of Single)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("x"), CommandParameter(Of Single)).setValue(x)
+        'End If
     End Sub
 
     Public Function getX() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("x")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("x"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -135,16 +135,16 @@ Public Class MixerClipCommand
     End Function
 
     Public Sub setY(ByVal y As Single)
-        If IsNothing(y) Then
-            DirectCast(getCommandParameter("y"), CommandParameter(Of Single)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("y"), CommandParameter(Of Single)).setValue(y)
-        End If
+        'If y Is Nothing Then
+        '    DirectCast(getCommandParameter("y"), CommandParameter(Of Single)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("y"), CommandParameter(Of Single)).setValue(y)
+        'End If
     End Sub
 
     Public Function getY() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("y")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("y"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -152,16 +152,16 @@ Public Class MixerClipCommand
     End Function
 
     Public Sub setXscale(ByVal xscale As Single)
-        If IsNothing(xscale) Then
-            DirectCast(getCommandParameter("xscale"), CommandParameter(Of Single)).setValue(1)
-        Else
-            DirectCast(getCommandParameter("xscale"), CommandParameter(Of Single)).setValue(xscale)
-        End If
+        'If xscale Is Nothing Then
+        '    DirectCast(getCommandParameter("xscale"), CommandParameter(Of Single)).setValue(1)
+        'Else
+        DirectCast(getCommandParameter("xscale"), CommandParameter(Of Single)).setValue(xscale)
+        'End If
     End Sub
 
     Public Function getXscale() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("xscale")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("xscale"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -169,16 +169,16 @@ Public Class MixerClipCommand
     End Function
 
     Public Sub setYscale(ByVal yscale As Single)
-        If IsNothing(yscale) Then
-            DirectCast(getCommandParameter("yscale"), CommandParameter(Of Single)).setValue(1)
-        Else
-            DirectCast(getCommandParameter("yscale"), CommandParameter(Of Single)).setValue(yscale)
-        End If
+        'If yscale Is Nothing Then
+        '    DirectCast(getCommandParameter("yscale"), CommandParameter(Of Single)).setValue(1)
+        'Else
+        DirectCast(getCommandParameter("yscale"), CommandParameter(Of Single)).setValue(yscale)
+        'End If
     End Sub
 
     Public Function getYscale() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("yscale")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("yscale"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -186,16 +186,16 @@ Public Class MixerClipCommand
     End Function
 
     Public Sub setDuration(ByVal duration As Integer)
-        If IsNothing(duration) Then
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
-        End If
+        'If duration Is Nothing Then
+        '    DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
+        'End If
     End Sub
 
     Public Function getDuratrion() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("duration")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -207,8 +207,8 @@ Public Class MixerClipCommand
     End Sub
 
     Public Function getTween() As CasparCGUtil.Tweens
-        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = getCommandParameter("tween")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = DirectCast(getCommandParameter("tween"), CommandParameter(Of CasparCGUtil.Tweens))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

@@ -48,7 +48,7 @@ Public Class SwapCommand
         checkParameter()
         Dim cmd As String = "SWAP "
         If getCommandParameter("layerA").isSet AndAlso getCommandParameter("layerB").isSet Then
-            cmd = cmd & getDestination(getCommandParameter("channelA"), getCommandParameter("layerA")) & " " & getDestination(getCommandParameter("channelB"), getCommandParameter("layerB"))
+            cmd = cmd & getDestination(DirectCast(getCommandParameter("channelA"), CommandParameter(Of Integer)), DirectCast(getCommandParameter("layerA"), CommandParameter(Of Integer))) & " " & getDestination(DirectCast(getCommandParameter("channelB"), CommandParameter(Of Integer)), DirectCast(getCommandParameter("layerB"), CommandParameter(Of Integer)))
         Else
             cmd = cmd & getChannelA() & " " & getChannelB()
         End If
@@ -60,13 +60,13 @@ Public Class SwapCommand
         If channelA > 0 Then
             DirectCast(getCommandParameter("channelA"), CommandParameter(Of Integer)).setValue(channelA)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channelA + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channelA & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannelA() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channelA")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channelA"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -75,15 +75,15 @@ Public Class SwapCommand
 
     Public Sub setLayerA(ByVal layerA As Integer)
         If layerA < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layerA + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layerA & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layerA"), CommandParameter(Of Integer)).setValue(layerA)
         End If
     End Sub
 
     Public Function getLayerA() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layerA")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layerA"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -94,13 +94,13 @@ Public Class SwapCommand
         If channelB > 0 Then
             DirectCast(getCommandParameter("channelB"), CommandParameter(Of Integer)).setValue(channelB)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channelB + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channelB & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannelB() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channelB")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channelB"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -109,15 +109,15 @@ Public Class SwapCommand
 
     Public Sub setLayerB(ByVal layerB As Integer)
         If layerB < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layerB + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layerB & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layerB"), CommandParameter(Of Integer)).setValue(layerB)
         End If
     End Sub
 
     Public Function getLayerB() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layerB")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layerB"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

@@ -17,11 +17,6 @@
 Public Class InfoCommand
     Inherits AbstractCommand
 
-    Public Sub New()
-        MyBase.New("INFO", "Requests informations about a channel or layer")
-        InitParameter()
-    End Sub
-
     Public Sub New(Optional ByVal channel As Integer = -1, Optional ByVal layer As Integer = -1, Optional ByVal onlyBackground As Boolean = False, Optional ByVal onlyForeground As Boolean = False, Optional ByVal delay As Boolean = False)
         MyBase.New("INFO", "Requests informations about a channel or layer")
         InitParameter()
@@ -72,13 +67,13 @@ Public Class InfoCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -87,15 +82,15 @@ Public Class InfoCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -107,8 +102,8 @@ Public Class InfoCommand
     End Sub
 
     Public Function getOnlyBackground() As Boolean
-        Dim param As CommandParameter(Of Boolean) = getCommandParameter("only background")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Boolean) = DirectCast(getCommandParameter("only background"), CommandParameter(Of Boolean))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -120,8 +115,8 @@ Public Class InfoCommand
     End Sub
 
     Public Function getOnlyForeground() As Boolean
-        Dim param As CommandParameter(Of Boolean) = getCommandParameter("only foreground")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Boolean) = DirectCast(getCommandParameter("only foreground"), CommandParameter(Of Boolean))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -133,8 +128,8 @@ Public Class InfoCommand
     End Sub
 
     Public Function getDelay() As Boolean
-        Dim param As CommandParameter(Of Boolean) = getCommandParameter("delay")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Boolean) = DirectCast(getCommandParameter("delay"), CommandParameter(Of Boolean))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

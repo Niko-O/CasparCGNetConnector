@@ -50,12 +50,12 @@ Public Class CasparCGResponse
     End Sub
 
     Public Shared Function parseReturnCode(ByVal serverMessage As String) As CasparReturnCode
-        If Not IsNothing(serverMessage) Then
-            serverMessage = Trim(serverMessage)
-            If serverMessage.Length > 2 AndAlso IsNumeric(serverMessage.Substring(0, 3)) Then
-                Dim returncode As Integer = Integer.Parse(serverMessage.Substring(0, 3))
+        If serverMessage IsNot Nothing Then
+            serverMessage = serverMessage.Trim
+            Dim returncode As Integer = -1
+            If serverMessage.Length > 2 AndAlso Integer.TryParse(serverMessage.Substring(0, 3), returncode) Then
                 If [Enum].IsDefined(GetType(CasparReturnCode), returncode) Then
-                    Return returncode
+                    Return DirectCast(returncode, CasparReturnCode)
                 End If
             End If
         End If
@@ -63,7 +63,7 @@ Public Class CasparCGResponse
     End Function
 
     Public Shared Function parseReturnCommand(ByVal serverMessage As String) As String
-        If Not IsNothing(serverMessage) AndAlso serverMessage.Length > 3 Then
+        If serverMessage IsNot Nothing AndAlso serverMessage.Length > 3 Then
             serverMessage = serverMessage.Trim().Substring(4) ' Code wegschneiden
             If serverMessage.Contains(" ") Then
                 Return serverMessage.Substring(0, serverMessage.IndexOf(" "))
@@ -75,19 +75,25 @@ Public Class CasparCGResponse
     End Function
 
     Public Shared Function parseReturnData(ByVal serverMessage As String) As String
-        If Not IsNothing(serverMessage) AndAlso serverMessage.Length > 0 Then
-            serverMessage.Substring(serverMessage.IndexOf(vbCr) + 1)
+        If serverMessage IsNot Nothing AndAlso serverMessage.Length > 0 Then
+            serverMessage.Substring(serverMessage.IndexOf(Microsoft.VisualBasic.Constants.vbCr) + 1)
             ' Leerzeilen am ende entfernen
-            Dim lines() = serverMessage.Split(vbCrLf)
+            'Option Strict Off converts Strings implicitly to Chars by taking the first Char of the String, so effectively only the CR-part of CRLF is used.
+            Dim lines() = serverMessage.Split(CChar(Microsoft.VisualBasic.Constants.vbCr))
             serverMessage = ""
             If lines.Length > 1 Then
                 For i = 1 To lines.Length - 1
-                    lines(i) = lines(i).Replace("vbcr", "").Replace(vbLf, "").Trim(vbVerticalTab).Trim(vbTab).Trim(vbNullChar).Trim(vbNewLine)
+                    lines(i) = lines(i).Replace("vbcr", "") _
+                        .Replace(Microsoft.VisualBasic.Constants.vbLf, "") _
+                        .Trim(CChar(Microsoft.VisualBasic.Constants.vbVerticalTab)) _
+                        .Trim(CChar(Microsoft.VisualBasic.Constants.vbTab)) _
+                        .Trim(CChar(Microsoft.VisualBasic.Constants.vbNullChar)) _
+                        .Trim(CChar(Microsoft.VisualBasic.Constants.vbCr))
                     If lines(i).Length > 0 Then
                         If i = 1 Then
                             serverMessage = lines(i)
                         Else
-                            serverMessage = serverMessage & vbNewLine & lines(i)
+                            serverMessage = serverMessage & Environment.NewLine & lines(i)
                         End If
                     End If
                 Next
@@ -98,7 +104,7 @@ Public Class CasparCGResponse
     End Function
 
     Public Shared Function parseXml(ByVal data As String) As String
-        If Not IsNothing(data) Then
+        If data IsNot Nothing Then
             Dim xml As String = ""
             If data.Contains("<?") And data.Contains("?>") Then
                 xml = data

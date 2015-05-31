@@ -349,9 +349,9 @@ Public Class CasparCGConnection
         Dim ch As Integer = 0
         If isConnected() Then
             Dim cmd As New InfoCommand()
-            If Not IsNothing(cmd.execute(Me)) AndAlso cmd.getResponse.isOK Then
-                Dim lineArray() = cmd.getResponse.getData.Split(vbLf)
-                If Not IsNothing(lineArray) Then
+            If cmd.execute(Me) IsNot Nothing AndAlso cmd.getResponse.isOK Then
+                Dim lineArray() = cmd.getResponse.getData.Split(CChar(Microsoft.VisualBasic.Constants.vbLf))
+                If lineArray IsNot Nothing Then
                     ch = lineArray.Length
                 End If
             End If
@@ -378,7 +378,7 @@ Public Class CasparCGConnection
         If isConnected(tryConnect) Then
             connectionLock.WaitOne(timeout)
             logger.debug("CasparCGConnection.sendAsyncCommand: Send command: " & cmd)
-            Dim buffer() As Byte = System.Text.Encoding.UTF8.GetBytes(cmd & vbCrLf)
+            Dim buffer() As Byte = System.Text.Encoding.UTF8.GetBytes(cmd & Environment.NewLine)
             Try
                 client.GetStream.Write(buffer, 0, buffer.Length)
                 logger.debug("CasparCGConnection.sendAsyncCommand: Command sent")
@@ -411,7 +411,7 @@ Public Class CasparCGConnection
             ' send cmd
             logger.debug("CasparCGConnection.sendCommand: Send command: " & cmd)
 
-            buffer = System.Text.Encoding.UTF8.GetBytes(cmd & vbCrLf)
+            buffer = System.Text.Encoding.UTF8.GetBytes(cmd & Environment.NewLine)
             client.GetStream.Write(buffer, 0, buffer.Length)
             Dim timer, timeouttimer As New Stopwatch
             timer.Start()
@@ -425,9 +425,9 @@ Public Class CasparCGConnection
                 '  2. 101 & 201: One data line ends with single crlf. So the second crlf is the end of the transmission.
                 '  3. Else: No data. Messages ends with crlf
                 Do Until (input.Trim.Length > 3) _
-                    AndAlso ((input.Trim.Substring(0, 3) = "200" AndAlso (input.EndsWith(vbLf & vbCrLf) OrElse input.EndsWith(vbLf & " " & vbCrLf) OrElse input.EndsWith(vbCrLf & " " & vbCrLf) OrElse input.EndsWith(vbCrLf & vbCrLf))) _
-                    OrElse ((input.Trim.Substring(0, 3) = "201" OrElse input.Trim.Substring(0, 3) = "101") AndAlso input.IndexOf(vbCrLf) < input.LastIndexOf(vbCrLf)) _
-                    OrElse (input.Trim.Substring(0, 3) <> "201" AndAlso input.Trim().Substring(0, 3) <> "200" AndAlso input.EndsWith(vbCrLf)))
+                    AndAlso ((input.Trim.Substring(0, 3) = "200" AndAlso (input.EndsWith(Microsoft.VisualBasic.Constants.vbLf & Environment.NewLine) OrElse input.EndsWith(Microsoft.VisualBasic.Constants.vbLf & " " & Environment.NewLine) OrElse input.EndsWith(Environment.NewLine & " " & Environment.NewLine) OrElse input.EndsWith(Environment.NewLine & Environment.NewLine))) _
+                    OrElse ((input.Trim.Substring(0, 3) = "201" OrElse input.Trim.Substring(0, 3) = "101") AndAlso input.IndexOf(Environment.NewLine) < input.LastIndexOf(Environment.NewLine)) _
+                    OrElse (input.Trim.Substring(0, 3) <> "201" AndAlso input.Trim().Substring(0, 3) <> "200" AndAlso input.EndsWith(Environment.NewLine)))
 
                     If client.Available > 0 Then
                         timeouttimer.Stop()
@@ -452,7 +452,7 @@ Public Class CasparCGConnection
 
             Catch e As TimeoutException
                 logger.err("CasparCGConnection.sendCommand: Error: " & e.Message)
-                logger.debug("CasparCGConnection.sendCommand: So far reveived from server:" & vbNewLine & input)
+                logger.debug("CasparCGConnection.sendCommand: So far reveived from server:" & Environment.NewLine & input)
                 If disconnectOnTimeout Then
                     closed()
                     Throw New TimeoutException("Timeout while sending command " & cmd & ". Connection " & getServerAddress() & ":" & getServerPort() & " closed!", e)

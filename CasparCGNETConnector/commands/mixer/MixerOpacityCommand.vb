@@ -75,13 +75,13 @@ Public Class MixerOpacityCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -90,15 +90,15 @@ Public Class MixerOpacityCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -106,16 +106,16 @@ Public Class MixerOpacityCommand
     End Function
 
     Public Sub setOpacity(ByVal opacity As Single)
-        If IsNothing(opacity) Then
-            DirectCast(getCommandParameter("opacity"), CommandParameter(Of Single)).setValue(0.0)
-        Else
-            DirectCast(getCommandParameter("opacity"), CommandParameter(Of Single)).setValue(opacity)
-        End If
+        'If opacity Is Nothing Then
+        '    DirectCast(getCommandParameter("opacity"), CommandParameter(Of Single)).setValue(0.0)
+        'Else
+        DirectCast(getCommandParameter("opacity"), CommandParameter(Of Single)).setValue(opacity)
+        'End If
     End Sub
 
     Public Function getOpacity() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("opacity")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("opacity"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -123,16 +123,16 @@ Public Class MixerOpacityCommand
     End Function
 
     Public Sub setDuration(ByVal duration As Integer)
-        If IsNothing(duration) Then
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
-        End If
+        'If duration Is Nothing Then
+        '    DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
+        'End If
     End Sub
 
     Public Function getDuratrion() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("duration")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -144,8 +144,8 @@ Public Class MixerOpacityCommand
     End Sub
 
     Public Function getTween() As CasparCGUtil.Tweens
-        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = getCommandParameter("tween")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = DirectCast(getCommandParameter("tween"), CommandParameter(Of CasparCGUtil.Tweens))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

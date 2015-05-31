@@ -38,8 +38,8 @@ Public Class FailoverCasparCGConnection
     Private master As ICasparCGConnection = Nothing
     Private slave As ICasparCGConnection = Nothing
 
-    Private masterTask As Task
-    Private slaveTask As Task
+    Private masterTask As System.Threading.Tasks.Task
+    Private slaveTask As System.Threading.Tasks.Task
 
     Public Property failoverMode As failoverModes
 
@@ -276,9 +276,9 @@ Public Class FailoverCasparCGConnection
         Dim ch As Integer = 0
         If isConnected() Then
             Dim cmd As New InfoCommand()
-            If Not IsNothing(cmd.execute(Me)) AndAlso cmd.getResponse.isOK Then
-                Dim lineArray() = cmd.getResponse.getData.Split(vbLf)
-                If Not IsNothing(lineArray) Then
+            If cmd.execute(Me) IsNot Nothing AndAlso cmd.getResponse.isOK Then
+                Dim lineArray() = cmd.getResponse.getData.Split(CChar(Microsoft.VisualBasic.Constants.vbLf))
+                If lineArray IsNot Nothing Then
                     ch = lineArray.Length
                 End If
             End If
@@ -321,8 +321,8 @@ Public Class FailoverCasparCGConnection
             Dim slaveResponse As CasparCGResponse
 
             Try
-                masterTask = Task.Factory.StartNew(New Action(Sub() masterResponse = master.sendCommand(cmd)))
-                slaveTask = Task.Factory.StartNew(New Action(Sub() slaveResponse = slave.sendCommand(cmd)))
+                masterTask = System.Threading.Tasks.Task.Factory.StartNew(New Action(Sub() masterResponse = master.sendCommand(cmd)))
+                slaveTask = System.Threading.Tasks.Task.Factory.StartNew(New Action(Sub() slaveResponse = slave.sendCommand(cmd)))
 
                 Select Case failoverMode
                     Case failoverModes.master_slave
@@ -342,6 +342,7 @@ Public Class FailoverCasparCGConnection
             RaiseEvent connectionFailed(Me, New FailoverConnectionFailedEventArgs(Me, connectionRoles.both, FailoverConnectionFailedEventArgs.reasons.NOT_CONNECTED))
             Return New CasparCGResponse("000 NOT_CONNECTED_ERROR", cmd)
         End If
+        Throw New NotImplementedException
     End Function
 
     ''' <summary>

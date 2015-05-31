@@ -30,12 +30,12 @@ Public Class MixerKeyerCommand
         setKeyer(keyer)
     End Sub
 
-    Public Sub New(ByVal channel As Integer, Optional ByVal layer As Integer = -1)
-        MyBase.New("MIXER KEYER", "Replaces layer n+1's alpha channel with the alpha channel of layer n, and hides the RGB channels of layer n. If keyer equals 1 then the specified layer will not be rendered, instead it will be used as the key for the layer above. ")
-        InitParameter()
-        setChannel(channel)
-        If layer > -1 Then setLayer(layer)
-    End Sub
+    'Public Sub New(ByVal channel As Integer, Optional ByVal layer As Integer = -1)
+    '    MyBase.New("MIXER KEYER", "Replaces layer n+1's alpha channel with the alpha channel of layer n, and hides the RGB channels of layer n. If keyer equals 1 then the specified layer will not be rendered, instead it will be used as the key for the layer above. ")
+    '    InitParameter()
+    '    setChannel(channel)
+    '    If layer > -1 Then setLayer(layer)
+    'End Sub
 
     Private Sub InitParameter()
         addCommandParameter(New ChannelParameter)
@@ -60,13 +60,13 @@ Public Class MixerKeyerCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -75,15 +75,15 @@ Public Class MixerKeyerCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -95,8 +95,8 @@ Public Class MixerKeyerCommand
     End Sub
 
     Public Function getKeyer() As Boolean
-        Dim param As CommandParameter(Of Boolean) = getCommandParameter("keyer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Boolean) = DirectCast(getCommandParameter("keyer"), CommandParameter(Of Boolean))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

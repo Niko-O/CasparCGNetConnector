@@ -30,12 +30,12 @@ Public Class MixerStraightAlphaOutputCommand
         setActive(active)
     End Sub
 
-    Public Sub New(ByVal channel As Integer, Optional ByVal layer As Integer = -1)
-        MyBase.New("MIXER STRAIGHT_ALPHA_OUTPUT", "If enabled, causes RGB values to be divided with the alpha for the given video channel before the image is sent to consumers. ")
-        InitParameter()
-        setChannel(channel)
-        If layer > -1 Then setLayer(layer)
-    End Sub
+    'Public Sub New(ByVal channel As Integer, Optional ByVal layer As Integer = -1)
+    '    MyBase.New("MIXER STRAIGHT_ALPHA_OUTPUT", "If enabled, causes RGB values to be divided with the alpha for the given video channel before the image is sent to consumers. ")
+    '    InitParameter()
+    '    setChannel(channel)
+    '    If layer > -1 Then setLayer(layer)
+    'End Sub
 
     Private Sub InitParameter()
         addCommandParameter(New ChannelParameter)
@@ -60,13 +60,13 @@ Public Class MixerStraightAlphaOutputCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -75,15 +75,15 @@ Public Class MixerStraightAlphaOutputCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -95,8 +95,8 @@ Public Class MixerStraightAlphaOutputCommand
     End Sub
 
     Public Function getActive() As Boolean
-        Dim param As CommandParameter(Of Boolean) = getCommandParameter("active")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Boolean) = DirectCast(getCommandParameter("active"), CommandParameter(Of Boolean))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

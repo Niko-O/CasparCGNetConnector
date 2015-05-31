@@ -44,14 +44,14 @@ Public Class PlayCommand
         If looping Then
             DirectCast(getCommandParameter("looping"), CommandParameter(Of Boolean)).setValue(looping)
         End If
-        If Not IsNothing(transition) Then
+        If transition IsNot Nothing Then
             DirectCast(getCommandParameter("transition"), CommandParameter(Of CasparCGTransition)).setValue(transition)
         End If
         If seek > 0 Then
-            DirectCast(getCommandParameter("seek"), CommandParameter(Of Integer)).setValue(seek)
+            DirectCast(getCommandParameter("seek"), CommandParameter(Of Integer)).setValue(CInt(seek))
         End If
         If length > 0 Then
-            DirectCast(getCommandParameter("length"), CommandParameter(Of Integer)).setValue(length)
+            DirectCast(getCommandParameter("length"), CommandParameter(Of Integer)).setValue(CInt(length))
         End If
         If filter.Length > 0 Then
             DirectCast(getCommandParameter("filter"), CommandParameter(Of String)).setValue(filter)
@@ -100,13 +100,13 @@ Public Class PlayCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -115,15 +115,15 @@ Public Class PlayCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -131,7 +131,7 @@ Public Class PlayCommand
     End Function
 
     Public Sub setMedia(ByVal media As String)
-        If Not IsNothing(media) Then
+        If media IsNot Nothing Then
             DirectCast(getCommandParameter("media"), CommandParameter(Of String)).setValue(media)
         Else
             DirectCast(getCommandParameter("media"), CommandParameter(Of String)).setValue("")
@@ -139,7 +139,7 @@ Public Class PlayCommand
     End Sub
 
     Public Sub setMedia(ByVal media As ICasparCGMedia)
-        If Not IsNothing(media) Then
+        If media IsNot Nothing Then
             DirectCast(getCommandParameter("media"), CommandParameter(Of String)).setValue(media.FullName)
         Else
             DirectCast(getCommandParameter("media"), CommandParameter(Of String)).setValue("")
@@ -147,8 +147,8 @@ Public Class PlayCommand
     End Sub
 
     Public Function getMedia() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("media")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("media"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -160,8 +160,8 @@ Public Class PlayCommand
     End Sub
 
     Public Function getLooping() As Boolean
-        Dim param As CommandParameter(Of Boolean) = getCommandParameter("looping")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Boolean) = DirectCast(getCommandParameter("looping"), CommandParameter(Of Boolean))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -173,8 +173,8 @@ Public Class PlayCommand
     End Sub
 
     Public Function getTransition() As CasparCGTransition
-        Dim param As CommandParameter(Of CasparCGTransition) = getCommandParameter("transition")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of CasparCGTransition) = DirectCast(getCommandParameter("transition"), CommandParameter(Of CasparCGTransition))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -190,8 +190,8 @@ Public Class PlayCommand
     End Sub
 
     Public Function getSeek() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("seek")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("seek"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -207,8 +207,8 @@ Public Class PlayCommand
     End Sub
 
     Public Function getLength() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("length")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("length"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -216,7 +216,7 @@ Public Class PlayCommand
     End Function
 
     Public Sub setFilter(ByVal filter As String)
-        If Not IsNothing(filter) Then
+        If filter IsNot Nothing Then
             DirectCast(getCommandParameter("filter"), CommandParameter(Of String)).setValue(filter)
         Else
             DirectCast(getCommandParameter("filter"), CommandParameter(Of String)).setValue("")
@@ -224,8 +224,8 @@ Public Class PlayCommand
     End Sub
 
     Public Function getFilter() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("filter")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("filter"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

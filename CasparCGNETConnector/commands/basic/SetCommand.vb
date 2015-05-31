@@ -43,19 +43,19 @@ Public Class SetCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Sub setVidemode(ByVal videomode As String)
-        If Not IsNothing(videomode) Then
+        If videomode IsNot Nothing Then
             DirectCast(getCommandParameter("video mode"), CommandParameter(Of String)).setValue(videomode)
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -63,8 +63,8 @@ Public Class SetCommand
     End Function
 
     Public Function getVideomode() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("video mode")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("video mode"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

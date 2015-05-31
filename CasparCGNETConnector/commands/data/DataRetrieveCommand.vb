@@ -38,7 +38,7 @@ Public Class DataRetrieveCommand
     End Function
 
     Public Sub setKey(ByVal key As String)
-        If IsNothing(key) Then
+        If key Is Nothing Then
             DirectCast(getCommandParameter("key"), CommandParameter(Of String)).setValue("")
         Else
             DirectCast(getCommandParameter("key"), CommandParameter(Of String)).setValue(key)
@@ -46,8 +46,8 @@ Public Class DataRetrieveCommand
     End Sub
 
     Public Function getKey() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("key")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("key"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

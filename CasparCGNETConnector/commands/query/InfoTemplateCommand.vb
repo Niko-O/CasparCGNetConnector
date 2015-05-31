@@ -44,7 +44,7 @@ Public Class InfoTemplateCommand
     End Function
 
     Public Sub setTemplate(ByVal template As String)
-        If IsNothing(template) Then
+        If template Is Nothing Then
             DirectCast(getCommandParameter("template"), CommandParameter(Of String)).setValue("")
         Else
             DirectCast(getCommandParameter("template"), CommandParameter(Of String)).setValue(template)
@@ -52,7 +52,7 @@ Public Class InfoTemplateCommand
     End Sub
 
     Public Sub setTemplate(ByVal template As CasparCGTemplate)
-        If IsNothing(template) Then
+        If template Is Nothing Then
             DirectCast(getCommandParameter("template"), CommandParameter(Of String)).setValue("")
         Else
             DirectCast(getCommandParameter("template"), CommandParameter(Of String)).setValue(template.FullName)
@@ -60,8 +60,8 @@ Public Class InfoTemplateCommand
     End Sub
 
     Public Function getTemplate() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("template")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("template"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

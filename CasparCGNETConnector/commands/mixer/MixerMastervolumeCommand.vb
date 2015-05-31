@@ -55,13 +55,13 @@ Public Class MixerMastervolumeCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -69,16 +69,16 @@ Public Class MixerMastervolumeCommand
     End Function
 
     Public Sub setVolume(ByVal volume As Single)
-        If IsNothing(volume) Then
-            DirectCast(getCommandParameter("volume"), CommandParameter(Of Single)).setValue(1)
-        Else
-            DirectCast(getCommandParameter("volume"), CommandParameter(Of Single)).setValue(volume)
-        End If
+        'If volume Is Nothing Then
+        '    DirectCast(getCommandParameter("volume"), CommandParameter(Of Single)).setValue(1)
+        'Else
+        DirectCast(getCommandParameter("volume"), CommandParameter(Of Single)).setValue(volume)
+        'End If
     End Sub
 
     Public Function getVolume() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("volume")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("volume"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

@@ -81,6 +81,6 @@ Public Interface ICasparCGMedia
     Function getInfo(ByVal info As String) As String
     Function toString() As String
     Function toXml() As Xml.XmlDocument
-    Function toXmlString()
+    Function toXmlString() As String
 #End Region
 End Interface

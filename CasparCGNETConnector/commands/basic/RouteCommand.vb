@@ -47,7 +47,7 @@ Public Class RouteCommand
     Public Overrides Function getCommandString() As String
         checkParameter()
         Dim cmd As String = "ROUTE " & getDestination()
-        cmd = cmd & " route://" & getDestination(getCommandParameter("source channel"), getCommandParameter("source layer"))
+        cmd = cmd & " route://" & getDestination(DirectCast(getCommandParameter("source channel"), CommandParameter(Of Integer)), DirectCast(getCommandParameter("source layer"), CommandParameter(Of Integer)))
 
         Return escape(cmd)
     End Function
@@ -56,13 +56,13 @@ Public Class RouteCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -71,15 +71,15 @@ Public Class RouteCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -90,13 +90,13 @@ Public Class RouteCommand
         If sourceChannel > 0 Then
             DirectCast(getCommandParameter("source channel"), CommandParameter(Of Integer)).setValue(sourceChannel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + sourceChannel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & sourceChannel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getSourceChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("source channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("source channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -105,15 +105,15 @@ Public Class RouteCommand
 
     Public Sub setSourceLayer(ByVal sourceLayer As Integer)
         If sourceLayer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + sourceLayer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & sourceLayer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("source layer"), CommandParameter(Of Integer)).setValue(sourceLayer)
         End If
     End Sub
 
     Public Function getSourceLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("source layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("source layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

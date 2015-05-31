@@ -87,13 +87,13 @@ Public Class MixerCropCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -102,15 +102,15 @@ Public Class MixerCropCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -118,16 +118,16 @@ Public Class MixerCropCommand
     End Function
 
     Public Sub setLeft(ByVal left As Single)
-        If IsNothing(left) Then
-            DirectCast(getCommandParameter("left"), CommandParameter(Of Single)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("left"), CommandParameter(Of Single)).setValue(left)
-        End If
+        'If left Is Nothing Then
+        '    DirectCast(getCommandParameter("left"), CommandParameter(Of Single)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("left"), CommandParameter(Of Single)).setValue(left)
+        'End If
     End Sub
 
     Public Function getLeft() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("left")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("left"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -135,16 +135,16 @@ Public Class MixerCropCommand
     End Function
 
     Public Sub setTop(ByVal top As Single)
-        If IsNothing(top) Then
-            DirectCast(getCommandParameter("top"), CommandParameter(Of Single)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("top"), CommandParameter(Of Single)).setValue(top)
-        End If
+        'If top Is Nothing Then
+        '    DirectCast(getCommandParameter("top"), CommandParameter(Of Single)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("top"), CommandParameter(Of Single)).setValue(top)
+        'End If
     End Sub
 
     Public Function getTop() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("top")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("top"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -152,16 +152,16 @@ Public Class MixerCropCommand
     End Function
 
     Public Sub setRight(ByVal right As Single)
-        If IsNothing(right) Then
-            DirectCast(getCommandParameter("right"), CommandParameter(Of Single)).setValue(1)
-        Else
-            DirectCast(getCommandParameter("right"), CommandParameter(Of Single)).setValue(right)
-        End If
+        'If right Is Nothing Then
+        '    DirectCast(getCommandParameter("right"), CommandParameter(Of Single)).setValue(1)
+        'Else
+        DirectCast(getCommandParameter("right"), CommandParameter(Of Single)).setValue(right)
+        'End If
     End Sub
 
     Public Function getRight() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("right")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("right"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -170,16 +170,16 @@ Public Class MixerCropCommand
 
 
     Public Sub setBottom(ByVal bottom As Single)
-        If IsNothing(bottom) Then
-            DirectCast(getCommandParameter("bottom"), CommandParameter(Of Single)).setValue(1)
-        Else
-            DirectCast(getCommandParameter("bottom"), CommandParameter(Of Single)).setValue(bottom)
-        End If
+        'If bottom Is Nothing Then
+        '    DirectCast(getCommandParameter("bottom"), CommandParameter(Of Single)).setValue(1)
+        'Else
+        DirectCast(getCommandParameter("bottom"), CommandParameter(Of Single)).setValue(bottom)
+        'End If
     End Sub
 
     Public Function getBottom() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("bottom")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("bottom"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -187,16 +187,16 @@ Public Class MixerCropCommand
     End Function
 
     Public Sub setDuration(ByVal duration As Integer)
-        If IsNothing(duration) Then
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
-        End If
+        'If duration Is Nothing Then
+        '    DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
+        'End If
     End Sub
 
     Public Function getDuratrion() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("duration")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -208,8 +208,8 @@ Public Class MixerCropCommand
     End Sub
 
     Public Function getTween() As CasparCGUtil.Tweens
-        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = getCommandParameter("tween")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = DirectCast(getCommandParameter("tween"), CommandParameter(Of CasparCGUtil.Tweens))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

@@ -22,31 +22,31 @@ Public Class CgAddCommand
         InitParameter()
     End Sub
 
-    Public Sub New(ByVal channel As Integer, ByVal layer As Integer, ByVal template As CasparCGTemplate, ByVal flashlayer As Integer, Optional ByVal playOnLoad As Boolean = False)
-        MyBase.New("CG ADD", "Adds a flashtemplate to a given channel / layer on a given flashlayer")
-        InitParameter()
-        setChannel(channel)
-        If layer > -1 Then setLayer(layer)
-        setFlashlayer(flashlayer)
-        setTemplate(template)
-        setPlayOnLoad(playOnLoad)
-        If template.hasData Then setData(template.getDataString)
-    End Sub
+    'Public Sub New(ByVal channel As Integer, ByVal layer As Integer, ByVal template As CasparCGTemplate, ByVal flashlayer As Integer, Optional ByVal playOnLoad As Boolean = False)
+    '    MyBase.New("CG ADD", "Adds a flashtemplate to a given channel / layer on a given flashlayer")
+    '    InitParameter()
+    '    setChannel(channel)
+    '    If layer > -1 Then setLayer(layer)
+    '    setFlashlayer(flashlayer)
+    '    setTemplate(template)
+    '    setPlayOnLoad(playOnLoad)
+    '    If template.hasData Then setData(template.getDataString)
+    'End Sub
 
-    Public Sub New(ByVal channel As Integer, ByVal layer As Integer, ByVal template As CasparCGTemplate, ByVal flashlayer As Integer, Optional ByVal playOnLoad As Boolean = False, Optional ByVal data As String = Nothing)
-        MyBase.New("CG ADD", "Adds a flashtemplate to a given channel / layer on a given flashlayer")
-        InitParameter()
-        setChannel(channel)
-        If layer > -1 Then setLayer(layer)
-        setFlashlayer(flashlayer)
-        setTemplate(template)
-        setPlayOnLoad(playOnLoad)
-        If Not IsNothing(data) Then
-            setData(data)
-        ElseIf template.hasData Then
-            setData(template.getDataString)
-        End If
-    End Sub
+    'Public Sub New(ByVal channel As Integer, ByVal layer As Integer, ByVal template As CasparCGTemplate, ByVal flashlayer As Integer, Optional ByVal playOnLoad As Boolean = False, Optional ByVal data As String = Nothing)
+    '    MyBase.New("CG ADD", "Adds a flashtemplate to a given channel / layer on a given flashlayer")
+    '    InitParameter()
+    '    setChannel(channel)
+    '    If layer > -1 Then setLayer(layer)
+    '    setFlashlayer(flashlayer)
+    '    setTemplate(template)
+    '    setPlayOnLoad(playOnLoad)
+    '    If data IsNot Nothing Then
+    '        setData(data)
+    '    ElseIf template.hasData Then
+    '        setData(template.getDataString)
+    '    End If
+    'End Sub
 
     Public Sub New(ByVal channel As Integer, ByVal layer As Integer, ByVal template As String, ByVal flashlayer As Integer, Optional ByVal playOnLoad As Boolean = False, Optional ByVal data As String = Nothing)
         MyBase.New("CG ADD", "Adds a flashtemplate to a given channel / layer on a given flashlayer")
@@ -56,7 +56,7 @@ Public Class CgAddCommand
         setFlashlayer(flashlayer)
         setTemplate(template)
         setPlayOnLoad(playOnLoad)
-        If Not IsNothing(data) Then setData(data)
+        If data IsNot Nothing Then setData(data)
     End Sub
 
     Private Sub InitParameter()
@@ -87,13 +87,13 @@ Public Class CgAddCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -102,15 +102,15 @@ Public Class CgAddCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -118,7 +118,7 @@ Public Class CgAddCommand
     End Function
 
     Public Sub setTemplate(ByVal template As String)
-        If IsNothing(template) Then
+        If template Is Nothing Then
             DirectCast(getCommandParameter("template"), CommandParameter(Of String)).setValue("")
         Else
             DirectCast(getCommandParameter("template"), CommandParameter(Of String)).setValue(template)
@@ -126,7 +126,7 @@ Public Class CgAddCommand
     End Sub
 
     Public Sub setTemplate(ByVal template As ICasparCGMedia)
-        If IsNothing(template) Then
+        If template Is Nothing Then
             DirectCast(getCommandParameter("template"), CommandParameter(Of String)).setValue("")
         Else
             DirectCast(getCommandParameter("template"), CommandParameter(Of String)).setValue(template.FullName)
@@ -134,8 +134,8 @@ Public Class CgAddCommand
     End Sub
 
     Public Function getTemplate() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("template")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("template"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -144,15 +144,15 @@ Public Class CgAddCommand
 
     Public Sub setFlashlayer(ByVal flashlayer As Integer)
         If flashlayer < 0 Then
-            Throw New ArgumentException("Illegal argument flashlayer=" + flashlayer + ". The parameter flashlayer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument flashlayer=" & flashlayer & ". The parameter flashlayer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("flashlayer"), CommandParameter(Of Integer)).setValue(flashlayer)
         End If
     End Sub
 
     Public Function getFlashlayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("flashlayer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("flashlayer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -164,8 +164,8 @@ Public Class CgAddCommand
     End Sub
 
     Public Function getPlayOnLoad() As Boolean
-        Dim param As CommandParameter(Of Boolean) = getCommandParameter("play on load")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Boolean) = DirectCast(getCommandParameter("play on load"), CommandParameter(Of Boolean))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -173,7 +173,7 @@ Public Class CgAddCommand
     End Function
 
     Public Sub setData(ByVal data As String)
-        If Not IsNothing(data) Then
+        If data IsNot Nothing Then
             DirectCast(getCommandParameter("data"), CommandParameter(Of String)).setValue(data)
         Else
             DirectCast(getCommandParameter("data"), CommandParameter(Of String)).setValue("")
@@ -181,7 +181,7 @@ Public Class CgAddCommand
     End Sub
 
     Public Sub setData(ByVal data As CasparCGTemplateData)
-        If IsNothing(data) Then
+        If data Is Nothing Then
             DirectCast(getCommandParameter("data"), CommandParameter(Of String)).setValue("")
         Else
             DirectCast(getCommandParameter("data"), CommandParameter(Of String)).setValue(data.getDataString)
@@ -189,8 +189,8 @@ Public Class CgAddCommand
     End Sub
 
     Public Function getData() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("data")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("data"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

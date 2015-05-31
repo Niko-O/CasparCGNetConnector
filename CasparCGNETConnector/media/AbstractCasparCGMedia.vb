@@ -31,7 +31,7 @@ Public MustInherit Class AbstractCasparCGMedia
         End Get
         Protected Set(value As String)
             _name = value
-            NotifyPropertyChanged()
+            NotifyPropertyChanged("Name")
             NotifyPropertyChanged("FullName")
         End Set
     End Property
@@ -42,7 +42,7 @@ Public MustInherit Class AbstractCasparCGMedia
         End Get
         Protected Set(value As String)
             _path = value
-            NotifyPropertyChanged()
+            NotifyPropertyChanged("Path")
             NotifyPropertyChanged("FullName")
         End Set
     End Property
@@ -59,7 +59,7 @@ Public MustInherit Class AbstractCasparCGMedia
         End Get
         Private Set(value As String)
             _uuid = value
-            NotifyPropertyChanged()
+            NotifyPropertyChanged("Uuid")
         End Set
     End Property
 
@@ -74,7 +74,7 @@ Public MustInherit Class AbstractCasparCGMedia
                 value = New Dictionary(Of String, String)
             End If
             _Infos = value
-            NotifyPropertyChanged()
+            NotifyPropertyChanged("Infos")
         End Set
     End Property
 
@@ -84,7 +84,7 @@ Public MustInherit Class AbstractCasparCGMedia
         End Get
         Set(value As String)
             _thumbB64 = CasparCGUtil.repairBase64(value)
-            NotifyPropertyChanged()
+            NotifyPropertyChanged("Base64Thumbnail")
         End Set
     End Property
 #End Region
@@ -173,7 +173,7 @@ Public MustInherit Class AbstractCasparCGMedia
                 Dim infoDoc As New Xml.XmlDocument
                 cmd = New InfoCommand(channel, layer, True)
                 infoDoc.LoadXml(cmd.execute(connection).getXMLData())
-                If Not IsNothing(infoDoc.SelectSingleNode("producer").SelectSingleNode("destination")) Then
+                If infoDoc.SelectSingleNode("producer").SelectSingleNode("destination") IsNot Nothing Then
                     If infoDoc.SelectSingleNode("producer").SelectSingleNode("destination").SelectSingleNode("producer").SelectSingleNode("type").FirstChild.Value.Equals("separated-producer") Then
                         parseXML(infoDoc.SelectSingleNode("producer").SelectSingleNode("destination").SelectSingleNode("producer").SelectSingleNode("fill").SelectSingleNode("producer").OuterXml)
                     Else
@@ -234,9 +234,9 @@ Public MustInherit Class AbstractCasparCGMedia
     Public Overrides Function toString() As String Implements ICasparCGMedia.toString
         Dim out As String = FullName() & " (" & MediaType.ToString & ")"
         If Infos.Count > 0 Then
-            out = out & vbNewLine & "INFOS:"
+            out = out & Environment.NewLine & "INFOS:"
             For Each info In Infos
-                out = out & vbNewLine & vbTab & info.Key & " = " & info.Value
+                out = out & Environment.NewLine & Microsoft.VisualBasic.Constants.vbTab & info.Key & " = " & info.Value
             Next
         End If
         Return out
@@ -252,7 +252,7 @@ Public MustInherit Class AbstractCasparCGMedia
         node.InnerText = FullName
         pnode.AppendChild(node)
         node = configDoc.CreateElement("type")
-        node.InnerText = MediaType
+        node.InnerText = MediaType.ToString
         pnode.AppendChild(node)
         node = configDoc.CreateElement("typename")
         node.InnerText = MediaType.ToString
@@ -279,14 +279,14 @@ Public MustInherit Class AbstractCasparCGMedia
         Return configDoc
     End Function
 
-    Public Function toXmlString() Implements ICasparCGMedia.toXmlString
+    Public Function toXmlString() As String Implements ICasparCGMedia.toXmlString
         Return toXml.OuterXml
     End Function
 
     ' This method is called by the Set accessor of each property. 
     ' The CallerMemberName attribute that is applied to the optional propertyName 
     ' parameter causes the property name of the caller to be substituted as an argument. 
-    Private Sub NotifyPropertyChanged(<CallerMemberName> Optional ByVal propertyName As String = Nothing)
+    Private Sub NotifyPropertyChanged(ByVal propertyName As String)
         RaiseEvent PropertyChanged(Me, New PropertyChangedEventArgs(propertyName))
     End Sub
 #End Region

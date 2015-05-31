@@ -37,7 +37,7 @@ Public MustInherit Class AbstractCommand
     ''' <param name="connection">the CasparCGConnection to execute the command on</param>
     ''' <returns>a CasparCGResponse if, and only if the command is compatible to the connected server version, else throws a NotSupportedException</returns>
     Public Overridable Function execute(ByRef connection As ICasparCGConnection) As CasparCGResponse
-        If Not IsNothing(connection) AndAlso connection.isConnected Then
+        If connection IsNot Nothing AndAlso connection.isConnected Then
             If Not connection.strictVersionControl OrElse isCompatible(connection) Then
                 response = connection.sendCommand(getCommandString)
                 Return getResponse()
@@ -150,7 +150,7 @@ Public MustInherit Class AbstractCommand
     End Function
 
     Protected Sub setCommandParameters(ByRef params As List(Of ICommandParameter))
-        If Not IsNothing(params) Then
+        If params IsNot Nothing Then
             parameter = params
             pNames.Clear()
             For Each p In parameter
@@ -164,7 +164,7 @@ Public MustInherit Class AbstractCommand
     End Function
 
     Protected Sub addCommandParameter(ByRef param As ICommandParameter)
-        If Not IsNothing(param) And Not pNames.Contains(param.getName) Then
+        If param IsNot Nothing And Not pNames.Contains(param.getName) Then
             parameter.Add(param)
             pNames.Add(param.getName.ToLower)
         End If
@@ -180,7 +180,7 @@ Public MustInherit Class AbstractCommand
         Dim dst As String = ""
         If getCommandParameterNames.Contains("channel") Then
             If getCommandParameter("channel").isSet Then
-                dst = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).getValue
+                dst = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).getValue.ToString
             Else
                 dst = "1"
             End If
@@ -194,11 +194,11 @@ Public MustInherit Class AbstractCommand
     Public Shared Function getDestination(ByRef channel As CommandParameter(Of Integer), Optional ByRef layer As CommandParameter(Of Integer) = Nothing) As String
         Dim cmd As String
         If channel.isSet() Then
-            cmd = channel.getValue
+            cmd = channel.getValue.ToString
         Else
             cmd = "1"
         End If
-        If Not IsNothing(layer) AndAlso layer.isSet Then
+        If layer IsNot Nothing AndAlso layer.isSet Then
             cmd = cmd & "-" & layer.getValue
         End If
         Return cmd
@@ -429,7 +429,7 @@ Public Class CommandParameter(Of t)
     ''' </summary>
     ''' <returns>the version to run this parameter as array of Integer</returns>
     Function getRequiredVersion() As Integer() Implements ICommandParameter.getRequiredVersion
-        If Not IsNothing(minVersion) Then
+        If minVersion IsNot Nothing Then
             Return minVersion
         Else
             Return {1}
@@ -441,7 +441,7 @@ Public Class CommandParameter(Of t)
     ''' </summary>
     ''' <returns>the highest version to run this parameter as array of Integer</returns>
     Function getMaxAllowedVersion() As Integer() Implements ICommandParameter.getMaxAllowedVersion
-        If Not IsNothing(minVersion) Then
+        If minVersion IsNot Nothing Then
             Return maxVersion
         Else
             Return {Integer.MaxValue}
@@ -513,7 +513,7 @@ Public Class CommandParameter(Of t)
         node.InnerText = getDescription()
         pnode.AppendChild(node)
         node = configDoc.CreateElement("optional")
-        node.InnerText = isOptional()
+        node.InnerText = isOptional().ToString
         pnode.AppendChild(node)
         'node = configDoc.createElement("reqVersion")
         'node.InnerText = getRequiredVersion()
@@ -548,7 +548,7 @@ Public Class ChannelParameter
         If value > 0 Then
             MyBase.setValue(value)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + value + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & value & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 End Class
@@ -569,7 +569,7 @@ Public Class LayerParameter
         If value > -1 Then
             MyBase.setValue(value)
         Else
-            Throw New ArgumentException("Illegal argument layer=" + value + ". The parameter layer has to be possitiv.")
+            Throw New ArgumentException("Illegal argument layer=" & value & ". The parameter layer has to be possitiv.")
         End If
     End Sub
 End Class

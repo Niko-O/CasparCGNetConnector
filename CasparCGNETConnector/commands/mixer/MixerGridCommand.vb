@@ -61,13 +61,13 @@ Public Class MixerGridCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -75,16 +75,16 @@ Public Class MixerGridCommand
     End Function
 
     Public Sub setResolution(ByVal duration As Integer)
-        If IsNothing(duration) Then
-            DirectCast(getCommandParameter("resolution"), CommandParameter(Of Integer)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("resolution"), CommandParameter(Of Integer)).setValue(duration)
-        End If
+        'If duration Is Nothing Then
+        '    DirectCast(getCommandParameter("resolution"), CommandParameter(Of Integer)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("resolution"), CommandParameter(Of Integer)).setValue(duration)
+        'End If
     End Sub
 
     Public Function getResolution() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("resolution")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("resolution"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -92,16 +92,16 @@ Public Class MixerGridCommand
     End Function
 
     Public Sub setDuration(ByVal duration As Integer)
-        If IsNothing(duration) Then
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
-        End If
+        'If duration Is Nothing Then
+        '    DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
+        'End If
     End Sub
 
     Public Function getDuratrion() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("duration")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -113,8 +113,8 @@ Public Class MixerGridCommand
     End Sub
 
     Public Function getTween() As CasparCGUtil.Tweens
-        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = getCommandParameter("tween")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = DirectCast(getCommandParameter("tween"), CommandParameter(Of CasparCGUtil.Tweens))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

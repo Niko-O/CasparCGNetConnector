@@ -123,7 +123,7 @@ Public Class CasparCGCommandFactory
     End Function
 
     Private Shared Function getInstance(ByVal t As System.Type) As Object
-        If Not IsNothing(t) Then
+        If t IsNot Nothing Then
             Return t.GetConstructor(New System.Type() {}).Invoke(New Object() {})
         End If
         Return Nothing
@@ -146,16 +146,16 @@ Public Class CasparCGCommandFactory
     End Function
 
     Public Shared Function getCommandInfoList() As String
-        Dim list As String = "Command Name (valid since version | number of parameters)" & vbNewLine & vbTab & "Describtion" & vbNewLine & vbNewLine & vbTab & "*Parameter..." & vbNewLine & vbNewLine
+        Dim list As String = "Command Name (valid since version | number of parameters)" & Environment.NewLine & Microsoft.VisualBasic.Constants.vbTab & "Describtion" & Environment.NewLine & Environment.NewLine & Microsoft.VisualBasic.Constants.vbTab & "*Parameter..." & Environment.NewLine & Environment.NewLine
         Dim cmd As AbstractCommand
 
         For Each commandName In [Enum].GetNames(GetType(Command))
             cmd = getCommand(commandName)
-            list = list & commandName & " (" & AbstractCommand.getVersionString(cmd.getRequiredVersion) & " | " & cmd.getCommandParameters.Count & ")" & vbNewLine & vbTab & cmd.getDescription & vbNewLine
+            list = list & commandName & " (" & AbstractCommand.getVersionString(cmd.getRequiredVersion) & " | " & cmd.getCommandParameters.Count & ")" & Environment.NewLine & Microsoft.VisualBasic.Constants.vbTab & cmd.getDescription & Environment.NewLine
             For Each p In cmd.getCommandParameters
-                list = list & vbTab & "*" & p.getName & ": " & p.getDescription & vbNewLine
+                list = list & Microsoft.VisualBasic.Constants.vbTab & "*" & p.getName & ": " & p.getDescription & Environment.NewLine
             Next
-            list = list & vbNewLine
+            list = list & Environment.NewLine
         Next
 
         Return list

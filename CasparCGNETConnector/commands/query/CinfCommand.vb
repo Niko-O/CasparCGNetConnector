@@ -25,13 +25,13 @@ Public Class CinfCommand
     Public Sub New(ByVal media As String)
         MyBase.New("CINF", "Requests details of a media file on the server")
         InitParameter()
-        If Not IsNothing(media) Then setMedia(media)
+        If media IsNot Nothing Then setMedia(media)
     End Sub
 
     Public Sub New(ByVal media As AbstractCasparCGMedia)
         MyBase.New("CINF", "Requests details of a media file on the server")
         InitParameter()
-        If Not IsNothing(media) Then setMedia(media)
+        If media IsNot Nothing Then setMedia(media)
     End Sub
 
     Private Sub InitParameter()
@@ -44,7 +44,7 @@ Public Class CinfCommand
     End Function
 
     Public Sub setMedia(ByVal media As String)
-        If IsNothing(media) Then
+        If media Is Nothing Then
             DirectCast(getCommandParameter("media"), CommandParameter(Of String)).unset()
         Else
             DirectCast(getCommandParameter("media"), CommandParameter(Of String)).setValue(media)
@@ -52,7 +52,7 @@ Public Class CinfCommand
     End Sub
 
     Public Sub setMedia(ByVal media As AbstractCasparCGMedia)
-        If IsNothing(media) Then
+        If media Is Nothing Then
             DirectCast(getCommandParameter("media"), CommandParameter(Of String)).unset()
         Else
             DirectCast(getCommandParameter("media"), CommandParameter(Of String)).setValue(media.FullName)
@@ -60,8 +60,8 @@ Public Class CinfCommand
     End Sub
 
     Public Function getMedia() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("media")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("media"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

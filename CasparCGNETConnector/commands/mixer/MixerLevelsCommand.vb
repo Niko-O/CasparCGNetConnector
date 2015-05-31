@@ -92,13 +92,13 @@ Public Class MixerLevelsCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -107,15 +107,15 @@ Public Class MixerLevelsCommand
 
     Public Sub setLayer(ByVal layer As Integer)
         If layer < 0 Then
-            Throw New ArgumentException("Illegal argument layer=" + layer + ". The parameter layer has to be greater or equal than 0.")
+            Throw New ArgumentException("Illegal argument layer=" & layer & ". The parameter layer has to be greater or equal than 0.")
         Else
             DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer)).setValue(layer)
         End If
     End Sub
 
     Public Function getLayer() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("layer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("layer"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -123,16 +123,16 @@ Public Class MixerLevelsCommand
     End Function
 
     Public Sub setMinInput(ByVal minInput As Single)
-        If IsNothing(minInput) Then
-            DirectCast(getCommandParameter("minInput"), CommandParameter(Of Single)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("minInput"), CommandParameter(Of Single)).setValue(minInput)
-        End If
+        'If minInput Is Nothing Then
+        '    DirectCast(getCommandParameter("minInput"), CommandParameter(Of Single)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("minInput"), CommandParameter(Of Single)).setValue(minInput)
+        'End If
     End Sub
 
     Public Function getMinInput() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("minInput")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("minInput"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -140,16 +140,16 @@ Public Class MixerLevelsCommand
     End Function
 
     Public Sub setMaxInput(ByVal maxInput As Single)
-        If IsNothing(maxInput) Then
-            DirectCast(getCommandParameter("maxInput"), CommandParameter(Of Single)).setValue(1)
-        Else
-            DirectCast(getCommandParameter("maxInput"), CommandParameter(Of Single)).setValue(maxInput)
-        End If
+        'If maxInput Is Nothing Then
+        '    DirectCast(getCommandParameter("maxInput"), CommandParameter(Of Single)).setValue(1)
+        'Else
+        DirectCast(getCommandParameter("maxInput"), CommandParameter(Of Single)).setValue(maxInput)
+        'End If
     End Sub
 
     Public Function getMaxInput() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("maxInput")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("maxInput"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -157,16 +157,16 @@ Public Class MixerLevelsCommand
     End Function
 
     Public Sub setMinOutput(ByVal minOutput As Single)
-        If IsNothing(minOutput) Then
-            DirectCast(getCommandParameter("minOutput"), CommandParameter(Of Single)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("minOutput"), CommandParameter(Of Single)).setValue(minOutput)
-        End If
+        'If minOutput Is Nothing Then
+        '    DirectCast(getCommandParameter("minOutput"), CommandParameter(Of Single)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("minOutput"), CommandParameter(Of Single)).setValue(minOutput)
+        'End If
     End Sub
 
     Public Function getMinOutput() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("minOutput")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("minOutput"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -174,16 +174,16 @@ Public Class MixerLevelsCommand
     End Function
 
     Public Sub setMaxOutput(ByVal maxOutput As Single)
-        If IsNothing(maxOutput) Then
-            DirectCast(getCommandParameter("maxOutput"), CommandParameter(Of Single)).setValue(1)
-        Else
-            DirectCast(getCommandParameter("maxOutput"), CommandParameter(Of Single)).setValue(maxOutput)
-        End If
+        'If maxOutput Is Nothing Then
+        '    DirectCast(getCommandParameter("maxOutput"), CommandParameter(Of Single)).setValue(1)
+        'Else
+        DirectCast(getCommandParameter("maxOutput"), CommandParameter(Of Single)).setValue(maxOutput)
+        'End If
     End Sub
 
     Public Function getMaxOutput() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("maxOutput")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("maxOutput"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -191,16 +191,16 @@ Public Class MixerLevelsCommand
     End Function
 
     Public Sub setGamma(ByVal gamma As Single)
-        If IsNothing(gamma) Then
-            DirectCast(getCommandParameter("gamma"), CommandParameter(Of Single)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("gamma"), CommandParameter(Of Single)).setValue(gamma)
-        End If
+        'If gamma Is Nothing Then
+        '    DirectCast(getCommandParameter("gamma"), CommandParameter(Of Single)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("gamma"), CommandParameter(Of Single)).setValue(gamma)
+        'End If
     End Sub
 
     Public Function getGamma() As Single
-        Dim param As CommandParameter(Of Single) = getCommandParameter("gamma")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Single) = DirectCast(getCommandParameter("gamma"), CommandParameter(Of Single))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -208,16 +208,16 @@ Public Class MixerLevelsCommand
     End Function
 
     Public Sub setDuration(ByVal duration As Integer)
-        If IsNothing(duration) Then
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
-        Else
-            DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
-        End If
+        'If duration Is Nothing Then
+        '    DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(0)
+        'Else
+        DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer)).setValue(duration)
+        'End If
     End Sub
 
     Public Function getDuratrion() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("duration")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("duration"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -229,8 +229,8 @@ Public Class MixerLevelsCommand
     End Sub
 
     Public Function getTween() As CasparCGUtil.Tweens
-        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = getCommandParameter("tween")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of CasparCGUtil.Tweens) = DirectCast(getCommandParameter("tween"), CommandParameter(Of CasparCGUtil.Tweens))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

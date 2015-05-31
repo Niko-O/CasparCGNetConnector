@@ -40,7 +40,7 @@ Public Class DataStoreCommand
     End Function
 
     Public Sub setKey(ByVal key As String)
-        If IsNothing(key) Then
+        If key Is Nothing Then
             DirectCast(getCommandParameter("key"), CommandParameter(Of String)).setValue("")
         Else
             DirectCast(getCommandParameter("key"), CommandParameter(Of String)).setValue(key)
@@ -48,8 +48,8 @@ Public Class DataStoreCommand
     End Sub
 
     Public Function getKey() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("key")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("key"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -57,7 +57,7 @@ Public Class DataStoreCommand
     End Function
 
     Public Sub setData(ByVal data As String)
-        If IsNothing(data) Then
+        If data Is Nothing Then
             DirectCast(getCommandParameter("data"), CommandParameter(Of String)).setValue("")
         Else
             DirectCast(getCommandParameter("data"), CommandParameter(Of String)).setValue(data)
@@ -65,8 +65,8 @@ Public Class DataStoreCommand
     End Sub
 
     Public Function getData() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("data")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("data"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault

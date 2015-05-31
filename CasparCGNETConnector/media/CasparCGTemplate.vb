@@ -68,7 +68,10 @@ Public Class CasparCGTemplate
 
             '' Instances
             For Each instance As Xml.XmlNode In configDoc.GetElementsByTagName("instance")
-                If Not IsDBNull(instance.Attributes.GetNamedItem("type")) AndAlso Not IsDBNull(instance.Attributes.GetNamedItem("name")) AndAlso containsComponent(instance.Attributes.GetNamedItem("type").FirstChild.Value) Then
+                'XmlAttributeCollection.GetNamedItem(String) returns an instance of XmlNode, which is never DBNull.
+                'IsDBNull returns "Expression IsNot Nothing AndAlso TypeOf Expression Is DBNull", which will obviously never ever return true for XmlNodes.
+                'If Not IsDBNull(instance.Attributes.GetNamedItem("type")) AndAlso Not IsDBNull(instance.Attributes.GetNamedItem("name")) AndAlso containsComponent(instance.Attributes.GetNamedItem("type").FirstChild.Value) Then
+                If containsComponent(instance.Attributes.GetNamedItem("type").FirstChild.Value) Then
                     Dim c As CasparCGTemplateComponent = getComponent(instance.Attributes.GetNamedItem("type").FirstChild.Value)
                     Dim i As New CasparCGTemplateInstance(instance.Attributes.GetNamedItem("name").FirstChild.Value, c)
                     data.addInstance(i)
@@ -123,15 +126,15 @@ Public Class CasparCGTemplate
     End Function
 
     Public Overrides Function toString() As String
-        Dim out As String = MyBase.toString & vbNewLine & "Components:"
+        Dim out As String = MyBase.toString & Environment.NewLine & "Components:"
         For Each comp In getComponents()
-            out = out & vbNewLine & vbTab & comp.getName
+            out = out & Environment.NewLine & Microsoft.VisualBasic.Constants.vbTab & comp.getName
         Next
-        out = out & vbNewLine & "Instances and their properties:"
+        out = out & Environment.NewLine & "Instances and their properties:"
         For Each instance In data.getInstances
             For Each prop In instance.getComponent.getProperties
-                out = out & vbNewLine & vbTab & "Property Name: '" & prop.Name & "' Type: '" & prop.Type & "' Desc: '" & prop.Info & "'"
-                out = out & vbNewLine & vbTab & instance.getName '& " = " & instance.getData(prop)
+                out = out & Environment.NewLine & Microsoft.VisualBasic.Constants.vbTab & "Property Name: '" & prop.Name & "' Type: '" & prop.Type & "' Desc: '" & prop.Info & "'"
+                out = out & Environment.NewLine & Microsoft.VisualBasic.Constants.vbTab & instance.getName '& " = " & instance.getData(prop)
             Next
         Next
         Return out
@@ -179,7 +182,9 @@ Public Class CasparCGTemplateData
     End Sub
 
     Public Sub New(ByRef instances As IEnumerable(Of CasparCGTemplateInstance))
-        instances = New Dictionary(Of String, CasparCGTemplateInstance)
+        'Not possible
+        'instances = New Dictionary(Of String, CasparCGTemplateInstance)
+        Me.instances = New Dictionary(Of String, CasparCGTemplateInstance)
         For Each instance As CasparCGTemplateInstance In instances
             addInstance(instance)
         Next
@@ -194,7 +199,7 @@ Public Class CasparCGTemplateData
     End Function
 
     Public Sub addInstance(ByRef instance As CasparCGTemplateInstance)
-        If Not IsNothing(instance) AndAlso Not containsInstance(instance.getName) Then
+        If instance IsNot Nothing AndAlso Not containsInstance(instance.getName) Then
             instances.Add(instance.getName, instance)
         End If
     End Sub
@@ -315,11 +320,15 @@ Public Class CasparCGTemplateComponentProperty
         Me.Value = value
     End Sub
 
+    ''' <summary>
+    ''' See <see cref="CasparCGTemplate.parseXML"/> for an explanation on this commented line.
+    ''' </summary>
     Public Sub New(ByVal xml As String)
         Dim configDoc As New Xml.XmlDocument
         configDoc.loadXML(xml)
         If configDoc.hasChildNodes Then
-            If Not IsNothing(configDoc.selectSingleNode("property")) AndAlso Not IsDBNull(configDoc.selectSingleNode("property")) Then
+            'If configDoc.SelectSingleNode("property") IsNot Nothing AndAlso Not IsDBNull(configDoc.SelectSingleNode("property")) Then
+            If configDoc.SelectSingleNode("property") IsNot Nothing Then
                 Name = configDoc.SelectSingleNode("property").Attributes.GetNamedItem("name").FirstChild.Value
                 Type = configDoc.SelectSingleNode("property").Attributes.GetNamedItem("type").FirstChild.Value
                 Info = configDoc.SelectSingleNode("property").Attributes.GetNamedItem("info").FirstChild.Value
@@ -328,7 +337,7 @@ Public Class CasparCGTemplateComponentProperty
     End Sub
 
     Public Function isSet() As Boolean
-        Return Not IsNothing(Value)
+        Return Value IsNot Nothing
     End Function
 
     Public Function toXML() As Xml.XmlDocument
@@ -343,7 +352,7 @@ Public Class CasparCGTemplateComponentProperty
 
     Public Function toDataXML() As Xml.XmlDocument
         Dim domDoc As New Xml.XmlDocument
-        If Not IsNothing(Value) Then
+        If Value IsNot Nothing Then
             Dim pnode As Xml.XmlElement = domDoc.CreateElement("data")
             pnode.SetAttribute("id", Name)
             pnode.SetAttribute("value", Value)

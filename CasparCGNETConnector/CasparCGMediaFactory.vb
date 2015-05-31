@@ -27,27 +27,27 @@ Public Class CasparCGMediaFactory
                 Dim pnode As Xml.XmlNode = configDoc.FirstChild
                 Dim name = pnode.SelectSingleNode("name").FirstChild.Value
                 Select Case pnode.SelectSingleNode("type").FirstChild.Value
-                    Case ICasparCGMedia.MediaTypes.AUDIO
+                    Case ICasparCGMedia.MediaTypes.AUDIO.ToString
                         media = New CasparCGAudio(name)
-                    Case ICasparCGMedia.MediaTypes.COLOR
+                    Case ICasparCGMedia.MediaTypes.COLOR.ToString
                         media = New CasparCGColor(name)
-                    Case ICasparCGMedia.MediaTypes.MOVIE
+                    Case ICasparCGMedia.MediaTypes.MOVIE.ToString
                         media = New CasparCGMovie(name)
-                    Case ICasparCGMedia.MediaTypes.STILL
+                    Case ICasparCGMedia.MediaTypes.STILL.ToString
                         media = New CasparCGStill(name)
-                    Case ICasparCGMedia.MediaTypes.TEMPLATE
+                    Case ICasparCGMedia.MediaTypes.TEMPLATE.ToString
                         media = New CasparCGTemplate(name)
                     Case Else
                         Return Nothing
                 End Select
 
-                If fillFromName AndAlso Not IsNothing(connection) Then
+                If fillFromName AndAlso connection IsNot Nothing Then
                     media.fillMediaInfo(connection)
                     media.fillThumbnail(connection)
-                ElseIf Not IsNothing(pnode.SelectSingleNode("infos")) Then
+                ElseIf pnode.SelectSingleNode("infos") IsNot Nothing Then
                     media.parseXML(pnode.SelectSingleNode("infos").OuterXml)
                     media.Base64Thumbnail = pnode.SelectSingleNode("thumb").InnerText
-                ElseIf Not IsNothing(pnode.SelectSingleNode("template")) Then
+                ElseIf pnode.SelectSingleNode("template") IsNot Nothing Then
                     media.parseXML(pnode.SelectSingleNode("template").OuterXml)
                 End If
 

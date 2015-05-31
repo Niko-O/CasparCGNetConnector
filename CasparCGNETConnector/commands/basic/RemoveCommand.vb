@@ -27,7 +27,7 @@ Public Class RemoveCommand
         InitParameter()
         setChannel(channel)
         setConsumer(consumer)
-        If Not IsNothing(parameter) Then setParamter(parameter)
+        If parameter IsNot Nothing Then setParamter(parameter)
     End Sub
 
     Private Sub InitParameter()
@@ -39,7 +39,7 @@ Public Class RemoveCommand
     Public Overrides Function getCommandString() As String
         checkParameter()
         Dim cmd As String = "REMOVE " & getDestination() & " " & getConsumer()
-        If getCommandParameter("parameter").isSet AndAlso Not IsNothing(getParameter()) AndAlso getParameter().Length > 0 Then
+        If getCommandParameter("parameter").isSet AndAlso getParameter() IsNot Nothing AndAlso getParameter().Length > 0 Then
             For Each p In getParameter()
                 cmd = cmd & " " & p
             Next
@@ -51,13 +51,13 @@ Public Class RemoveCommand
         If channel > 0 Then
             DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer)).setValue(channel)
         Else
-            Throw New ArgumentException("Illegal argument channel=" + channel + ". The parameter channel has to be greater than 0.")
+            Throw New ArgumentException("Illegal argument channel=" & channel & ". The parameter channel has to be greater than 0.")
         End If
     End Sub
 
     Public Function getChannel() As Integer
-        Dim param As CommandParameter(Of Integer) = getCommandParameter("channel")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of Integer) = DirectCast(getCommandParameter("channel"), CommandParameter(Of Integer))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -65,14 +65,14 @@ Public Class RemoveCommand
     End Function
 
     Public Sub setConsumer(ByVal consumer As String)
-        If Not IsNothing(consumer) Then
+        If consumer IsNot Nothing Then
             DirectCast(getCommandParameter("consumer"), CommandParameter(Of String)).setValue(consumer)
         End If
     End Sub
 
     Public Function getConsumer() As String
-        Dim param As CommandParameter(Of String) = getCommandParameter("consumer")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String) = DirectCast(getCommandParameter("consumer"), CommandParameter(Of String))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
@@ -80,14 +80,14 @@ Public Class RemoveCommand
     End Function
 
     Public Sub setParamter(ByVal parameter As String())
-        If Not IsNothing(parameter) Then
+        If parameter IsNot Nothing Then
             DirectCast(getCommandParameter("parameter"), CommandParameter(Of String())).setValue(parameter)
         End If
     End Sub
 
     Public Function getParameter() As String()
-        Dim param As CommandParameter(Of String()) = getCommandParameter("parameter")
-        If Not IsNothing(param) And param.isSet Then
+        Dim param As CommandParameter(Of String()) = DirectCast(getCommandParameter("parameter"), CommandParameter(Of String()))
+        If param IsNot Nothing And param.isSet Then
             Return param.getValue
         Else
             Return param.getDefault
