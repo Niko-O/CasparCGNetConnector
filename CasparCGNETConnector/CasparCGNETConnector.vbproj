@@ -59,7 +59,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="D:\Projects\VB\_Libs\OnUtils\OnUtils\bin\Release\OnUtils.dll" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="System" />
@@ -69,9 +68,6 @@
     <Import Include="System.Diagnostics" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
-    <Import Include="OnUtils" />
-    <Import Include="OnUtils.Extensions" />
-    <Import Include="OnUtils.Streams" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CasparCGCommandFactory.vb" />
